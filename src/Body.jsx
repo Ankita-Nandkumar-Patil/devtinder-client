@@ -9,7 +9,7 @@ export default function Body() {
       <Navbar/>
       <Outlet /> 
       {/* any children route jsx will be rendered inside this outle */}
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 }
