@@ -1,14 +1,21 @@
 
-import './App.css'
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Body from "./Body";
+import Profile from "./_components/Profile";
+import Login from "./_components/Login";
 
 function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-blue-500">
-        Hello Tailwind!
-      </h1>
-      <button className="btn btn-primary">DaisyUI Button</button>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
