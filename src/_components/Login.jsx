@@ -8,6 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [emailID, setEmailID] = useState("ross@gmail.com");
   const [password, setPassword] = useState("Ross@123");
+  const [errMsg, setErrMsg] = useState("")
 
   const handleLogin = async () => {
     try {
@@ -28,6 +29,7 @@ export default function Login() {
       navigate("/feed")
     } catch (error) {
       console.error(error);
+      setErrMsg(error?.response?.data || "Something went wrong!")
     }
   };
 
@@ -109,6 +111,7 @@ export default function Login() {
             At least one uppercase letter
           </p> */}
           {/* btn */}
+          <p className="text-red-600">{errMsg}</p>
           <div className="card-actions mt-5">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
