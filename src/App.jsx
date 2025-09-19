@@ -5,7 +5,7 @@ import Profile from "./_components/Profile";
 import Login from "./_components/Login";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
-import ProtectedRoutes from "./_components/ProtectedRoutes";
+import Feed from "./_components/Feed";
 
 function App() {
 
@@ -14,19 +14,10 @@ function App() {
       <Provider store={appStore}>
         <BrowserRouter basename="/">
           <Routes>
-            {/* public routes */}
-            <Route path="/login" element={<Login />} />
-
-            {/* protected routes: protecting entire route group */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoutes>
-                  <Body />
-                </ProtectedRoutes>
-              }
-            >
+            <Route path="/" element={<Body />}>
+              <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/feed" element={<Feed/>} />
             </Route>
           </Routes>
         </BrowserRouter>

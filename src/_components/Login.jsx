@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [emailID, setEmailID] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailID, setEmailID] = useState("ross@gmail.com");
+  const [password, setPassword] = useState("Ross@123");
 
   const handleLogin = async () => {
     try {
@@ -25,7 +25,7 @@ export default function Login() {
 
       // adding userdata to store
       dispatch(addUser(result.data))
-      navigate("/")
+      navigate("/feed")
     } catch (error) {
       console.error(error);
     }
@@ -63,6 +63,7 @@ export default function Login() {
             <input
               type="email"
               placeholder="mail@site.com"
+              value={emailID}
               required
               onChange={(e) => setEmailID(e.target.value)}
             />
@@ -89,6 +90,7 @@ export default function Login() {
             </svg>
             <input
               type="password"
+              value={password}
               required
               placeholder="Password"
               minLength="8"

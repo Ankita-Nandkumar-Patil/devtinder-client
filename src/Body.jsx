@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import axios from "axios";
+
 import Navbar from './_components/Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Footer from './_components/Footer'
@@ -18,6 +20,8 @@ export default function Body() {
         withCredentials: true,
       });
       dispatch(addUser(res.data))
+  console.log("view", res);
+
     } catch (error) {
       if (error.status === 401) {
         navigate("/login")
@@ -25,6 +29,7 @@ export default function Body() {
       console.error(error)
     }
   };
+
 
   useEffect(() => {
     fetchUser()
