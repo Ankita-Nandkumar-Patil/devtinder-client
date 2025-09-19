@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 export default function Navbar() {
+  const user = useSelector((store)=> store.user)
   return (
     <>
       <div className="navbar bg-base-300 shadow-sm">
@@ -25,8 +28,8 @@ export default function Navbar() {
             >
               <li>
                 <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                  Profile : {user?.firstName}
+                  {/* <span className="badge">New</span> */}
                 </a>
               </li>
               <li>

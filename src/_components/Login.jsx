@@ -1,27 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
-
-  const [emailID, setEmailID] = useState("")
-  const [password, setPassword] = useState("")
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [emailID, setEmailID] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      console.log(emailID,password);
-      
-      const result = await axios.post("http://localhost:3000/login", {
-        emailID, password
-      },
-      { withCredentials: true} 
-      // for setting cookies-token
-    );
+      console.log(emailID, password);
+
+      const result = await axios.post(
+        "http://localhost:3000/login",
+        {
+          emailID,
+          password,
+        },
+        { withCredentials: true }
+        // for setting cookies-token
+      );
+
+      // adding userdata to store
+      dispatch(addUser(result.data))
+      navigate("/")
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   console.log(emailID, password);
-  
 
   return (
     <div className="flex justify-center my-10">
@@ -107,4 +117,3 @@ export default function Login() {
     </div>
   );
 }
- 
