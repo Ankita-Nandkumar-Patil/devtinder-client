@@ -1,14 +1,30 @@
 
-import './App.css'
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Body from "./Body";
+import Profile from "./_components/Profile";
+import Login from "./_components/Login";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Feed from "./_components/Feed";
+import SignUp from "./_components/SignUp";
 
 function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-blue-500">
-        Hello Tailwind!
-      </h1>
-      <button className="btn btn-primary">DaisyUI Button</button>
+      <Provider store={appStore}>
+        <BrowserRouter basename="/">
+          <Routes>
+            <Route path="/" element={<Body />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/feed" element={<Feed />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }
