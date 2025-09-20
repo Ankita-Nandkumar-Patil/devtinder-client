@@ -78,7 +78,10 @@ export default function UserDetailsForm({ width, initialData, mode }) {
 
             <div className="flex justify-center">
               <label className="flex-1 floating-label m-2">
-                <span>First Name</span>
+                <span>
+                  First Name
+                  <span className="text-red-500 ml-1 text-xl">*</span>
+                </span>
                 <input
                   type="text"
                   name="firstName"
@@ -90,7 +93,9 @@ export default function UserDetailsForm({ width, initialData, mode }) {
               </label>
 
               <label className="flex-1 floating-label m-2">
-                <span>Last Name</span>
+                <span>
+                  Last Name <span className="text-red-500 ml-1 text-xl">*</span>
+                </span>
                 <input
                   type="text"
                   name="lastName"
@@ -105,7 +110,10 @@ export default function UserDetailsForm({ width, initialData, mode }) {
             {mode == "signup" && (
               <div className="flex justify-center">
                 <label className="flex-1 floating-label m-2">
-                  <span>Your Email</span>
+                  <span>
+                    Your Email{" "}
+                    <span className="text-red-500 ml-1 text-xl">*</span>
+                  </span>
                   <input
                     type="text"
                     name="emailID"
@@ -117,7 +125,10 @@ export default function UserDetailsForm({ width, initialData, mode }) {
                 </label>
 
                 <label className="flex-1 floating-label m-2">
-                  <span>Password</span>
+                  <span>
+                    Password{" "}
+                    <span className="text-red-500 ml-1 text-xl">*</span>
+                  </span>
                   <input
                     type="password"
                     name="password"
@@ -182,24 +193,24 @@ export default function UserDetailsForm({ width, initialData, mode }) {
             </div>
 
             <textarea
-              placeholder="About"
-              name="about"
-              value={formData.about}
-              onChange={handlechange}
-              maxLength={200} // 👈 limit to 200 characters
-              className={textareaClass}
-            />
-            <p className="text-sm text-gray-400 text-right">
-              {formData.about.length}/200
-            </p>
-
-            <textarea
               placeholder="Skills"
               name="skills"
               value={formData.skills}
               onChange={handlechange}
               className={textareaClass}
             ></textarea>
+
+            <textarea
+              placeholder="About"
+              name="about"
+              value={formData.about}
+              onChange={handlechange}
+              maxLength={200}
+              className={textareaClass}
+            />
+            <p className="text-sm text-gray-400 text-right">
+              {formData.about.length}/200
+            </p>
 
             <div className="card-actions justify-center mt-4 mb-2">
               {mode == "signup" && (
