@@ -26,7 +26,7 @@ export default function Feed() {
   return feedData && (
     <div className="mt-10">
       {/* {feedData?.data?.map} */}
-      <UserCard data={feedData?.data[0]} />
+      <UserCard data={feedData?.data[0]} mode="feed" />
     </div>
   )
 }

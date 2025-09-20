@@ -9,7 +9,7 @@ export default function Profile() {
   return (
     <div className="flex items-center justify-center gap-20 mt-14">
       <UserDetailsForm width="1/3" initialData={loggedInUser} mode="profileEdit"/>
-      <UserCard data={loggedInUser} />
+      <UserCard data={loggedInUser} mode="profile" />
     </div>
   )
 }
