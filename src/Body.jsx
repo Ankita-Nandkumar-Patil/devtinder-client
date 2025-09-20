@@ -15,11 +15,10 @@ export default function Body() {
   const fetchUser = async () => {
     if (userData) return;
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", {}, {
+      const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
       });
       dispatch(addUser(res.data))
-  console.log("view", res);
 
     } catch (error) {
       if (error.status === 401) {

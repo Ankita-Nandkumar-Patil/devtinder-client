@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constants";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -12,10 +13,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      console.log(emailID, password);
 
       const result = await axios.post(
-        "http://localhost:3000/login",
+        BASE_URL + "/login",
         {
           emailID,
           password,
@@ -33,7 +33,6 @@ export default function Login() {
     }
   };
 
-  console.log(emailID, password);
 
   return (
     <div className="flex justify-center my-10">
@@ -117,6 +116,15 @@ export default function Login() {
               Login
             </button>
           </div>
+          <p className="mt-2">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="inline-block cursor-pointer font-semibold pl-1 hover:text-purple-400 hover:underline hover:scale-105 transition-transform duration-200"
+            >
+              Sign Up !
+            </Link>
+          </p>
         </div>
       </div>
     </div>
