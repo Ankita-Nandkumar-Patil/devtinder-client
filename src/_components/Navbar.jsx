@@ -24,9 +24,11 @@ export default function Navbar() {
     <>
       <div className="navbar bg-base-300 shadow-sm">
         <div className="flex-1">
-          <Link to="/feed" className="btn btn-ghost text-xl">Devtinder</Link>
+          <Link to="/feed" className="btn btn-ghost text-xl">
+            Devtinder
+          </Link>
         </div>
-        <div className="flex gap-2">
+        {user && <div className="flex gap-2">
           <div className="dropdown dropdown-end mr-5">
             <div
               tabIndex={0}
@@ -34,10 +36,7 @@ export default function Navbar() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={user?.photoUrl}
-                />
+                <img alt="Tailwind CSS Navbar component" src={user?.photoUrl} />
               </div>
             </div>
             <ul
@@ -47,6 +46,16 @@ export default function Navbar() {
               <li>
                 <Link to="/profile" className="justify-between">
                   Profile : {user?.firstName}
+                </Link>
+              </li>
+              <li>
+                <Link to="/connections" className="justify-between">
+                  Connections
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests" className="justify-between">
+                 Requests
                   {/* <span className="badge">New</span> */}
                 </Link>
               </li>
@@ -55,7 +64,7 @@ export default function Navbar() {
               </li>
             </ul>
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );
