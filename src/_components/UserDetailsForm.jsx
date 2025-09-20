@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import {BASE_URL} from "../constants"
 import { useDispatch } from "react-redux";
 import {addUser} from "../utils/userSlice"
+import { useNavigate } from "react-router-dom";
 
 export default function UserDetailsForm({ width, initialData, mode }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // Shared Tailwind classes for inputs
   const inputClass =
     "input input-ghost w-full shadow-[0_0_6px_rgba(255,255,255,0.1)] " +
@@ -40,9 +41,20 @@ export default function UserDetailsForm({ width, initialData, mode }) {
     setFormData((prev) => ({...prev,[name]: value}))
   }
   
-  const handleSubmit = async () => {
+  const handleSignUp = async () => {
     try {
-      await axios.post(BASE_URL + "/signup",formData);
+      const res = await axios.post(BASE_URL + "/signup", formData);
+      console.log("signup", res);
+      if (res?.status == 200) {
+        const emailID = formData.emailID
+        const password = formData.password
+        const loginres = await axios.post(BASE_URL + "/login", { emailID, password }, { withCredentials: true })
+        if (loginres?.status == 200) {
+          navigate("/feed")
+        }
+        console.log("loginn",loginres)
+      }
+      
     } catch (error) {
       console.error(error)
     }
@@ -214,7 +226,7 @@ export default function UserDetailsForm({ width, initialData, mode }) {
 
             <div className="card-actions justify-center mt-4 mb-2">
               {mode == "signup" && (
-                <button className="btn btn-primary" onClick={handleSubmit}>
+                <button className="btn btn-primary" onClick={handleSignUp}>
                   Sign Up
                 </button>
               )}
