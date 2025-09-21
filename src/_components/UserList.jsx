@@ -1,62 +1,83 @@
 import React from 'react'
+import { BASE_URL, DEFAULT_PROFILE} from "../constants"
+import axios from 'axios';
 
-export default function UserList({width, data}) {
-  return (
+export default function UserList({width, data, mode}) {
+
+  const handleReq = async (status, _id) => {
+    try {
+      const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {withCredentials: true});
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  console.log("userlist dta", data);
+  
+  
+  return data && (
     <div className={`${width}`}>
-      <ul className="list bg-base-100 rounded-box shadow-md">
-        <li className="list-row">
-          <div>
-            <img
-              className="size-10 rounded-box"
-              src="https://img.daisyui.com/images/profile/demo/1@94.webp"
-            />
-          </div>
-          <div>
-            <div>Dio Lupa</div>
-            <div className="text-xs uppercase font-semibold opacity-60">
-              Remaining Reason
+      <ul className="list bg-base-200 rounded-box shadow-md">
+        {data?.map((item) => (
+          <li className="list-row" key={item?._id}>
+            <div>
+              <img
+                className="size-12 rounded-box"
+                src={item?.photoUrl || DEFAULT_PROFILE}
+              />
             </div>
-          </div>
-          <p className="list-col-wrap text-xs">
-            "Remaining Reason" became an instant hit, praised for its haunting
-            sound and emotional depth. A viral performance brought it widespread
-            recognition, making it one of Dio Lupa’s most iconic tracks.
-          </p>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M6 3L20 12 6 21 6 3z"></path>
-              </g>
-            </svg>
-          </button>
-          <button className="btn btn-square btn-ghost">
-            <svg
-              className="size-[1.2em]"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-              </g>
-            </svg>
-          </button>
-        </li>
+            <div>
+              <div className="capitalize text-[20px] font-semibold text-amber-600">
+                {item?.firstName} {item?.lastName}
+              </div>
+              <div className="text-[12px] flex gap-2">
+                <span>{item?.age}</span>
+                <span>|</span>
+                <span>{item?.gender}</span>
+                <span>|</span>
+                <span>{item?.city}</span>
+              </div>
+            </div>
+            <p className="list-col-wrap text-[13px]">{item?.about}</p>
+
+            {mode == "requests" && (
+              <div className="card-actions justify-between mt-2 gap-4">
+                <div className="tooltip">
+                  <div className="tooltip-content">
+                    <div className="animate-bounce text-green-500 -rotate-10 font-black">
+                      Accept!
+                    </div>
+                  </div>
+                  <button onClick={() => handleReq("accepted", item?._id)}>
+                    <img
+                      src="/like.png"
+                      width="30"
+                      height="30"
+                      alt="like"
+                      title="Accept"
+                    />
+                  </button>
+                </div>
+                <div className="tooltip">
+                  <div className="tooltip-content">
+                    <div className="animate-bounce text-red-500 -rotate-10 font-black">
+                      Reject!
+                    </div>
+                  </div>
+                  <button onClick={() => handleReq("rejected", item?._id)}>
+                    <img
+                      src="/dislike.png"
+                      width="30"
+                      height="30"
+                      alt="dislike"
+                      title="Reject"
+                    />
+                  </button>
+                </div>
+              </div>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );
