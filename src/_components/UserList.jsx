@@ -1,18 +1,20 @@
 import React from 'react'
 import { BASE_URL, DEFAULT_PROFILE} from "../constants"
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { removeRequest } from '../utils/reqSlice';
 
 export default function UserList({width, data, mode}) {
-
+  const dispatch = useDispatch()
   const handleReq = async (status, _id) => {
     try {
-      const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {withCredentials: true});
+      const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
+      console.log(status, _id)
+      dispatch(removeRequest(_id))
     } catch (error) {
       console.error(error)
     }
-  }
-
-  console.log("userlist dta", data);
+  }  
   
   
   return data && (
@@ -48,7 +50,7 @@ export default function UserList({width, data, mode}) {
                       Accept!
                     </div>
                   </div>
-                  <button onClick={() => handleReq("accepted", item?._id)}>
+                  <button onClick={() => handleReq("accepted", item?.requestId)}>
                     <img
                       src="/like.png"
                       width="30"
@@ -64,7 +66,7 @@ export default function UserList({width, data, mode}) {
                       Reject!
                     </div>
                   </div>
-                  <button onClick={() => handleReq("rejected", item?._id)}>
+                  <button onClick={() => handleReq("rejected", item?.requestId)}>
                     <img
                       src="/dislike.png"
                       width="30"
