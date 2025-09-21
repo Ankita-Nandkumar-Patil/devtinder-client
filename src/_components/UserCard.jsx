@@ -3,7 +3,7 @@ import React from 'react'
 import { BASE_URL } from "../constants"
 import { useDispatch } from 'react-redux';
 import {removeFeedData} from "../utils/feedSlice"
-
+import { DEFAULT_PROFILE } from "../constants";
 export default function UserCard({ data, mode }) {
   const dispatch = useDispatch()
   const { firstName, lastName, age, gender, photoUrl, about, city, _id } = data;
@@ -11,14 +11,12 @@ export default function UserCard({ data, mode }) {
 
   const handleReq = async (status, _id) => {
     try {
-      console.log("req data", status, _id);
       const res = await axios.post(
         BASE_URL + "/request/send/" + status +"/"+ _id,{},{withCredentials: true}
       );
       dispatch(removeFeedData(_id));
-      console.log(res)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -27,7 +25,7 @@ export default function UserCard({ data, mode }) {
       <div className="card bg-base-300 w-96 shadow-sm">
         <figure className="h-80 w-full bg-base-200 flex items-center justify-center">
           <img
-            src={photoUrl}
+            src={photoUrl || DEFAULT_PROFILE}
             alt="User"
             className="h-full w-full object-cover"
           />

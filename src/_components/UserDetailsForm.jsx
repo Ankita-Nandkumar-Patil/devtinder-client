@@ -4,7 +4,7 @@ import {BASE_URL} from "../constants"
 import { useDispatch } from "react-redux";
 import {addUser} from "../utils/userSlice"
 import { useNavigate } from "react-router-dom";
-
+import {DEFAULT_PROFILE} from "../constants"
 export default function UserDetailsForm({ width, initialData, mode }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,14 +19,13 @@ export default function UserDetailsForm({ width, initialData, mode }) {
     "focus:shadow-[0_0_10px_rgba(255,255,255,0.2)] " +
     "focus:ring-1 focus:ring-purple-400 transition-all";
   
-  console.log("initialData", initialData);
 
   const [formData, setFormData] = useState({
     firstName: initialData?.firstName || "",
     lastName: initialData?.lastName || "",
     emailID: initialData?.emailID || "",
     password: initialData?.password || "",
-    photoUrl: initialData?.photoUrl || "",
+    photoUrl: initialData?.photoUrl || DEFAULT_PROFILE,
     age: initialData?.age || "",
     city: initialData?.city || "",
     gender: initialData?.gender || "",
@@ -44,7 +43,6 @@ export default function UserDetailsForm({ width, initialData, mode }) {
   const handleSignUp = async () => {
     try {
       const res = await axios.post(BASE_URL + "/signup", formData);
-      console.log("signup", res);
       if (res?.status == 200) {
         const emailID = formData.emailID
         const password = formData.password
@@ -52,7 +50,6 @@ export default function UserDetailsForm({ width, initialData, mode }) {
         if (loginres?.status == 200) {
           navigate("/feed")
         }
-        console.log("loginn",loginres)
       }
       
     } catch (error) {
